@@ -20,6 +20,10 @@ DB_PASSWORD=seedpagarme
 REDIS_HOST=cache
 REDIS_PASSWORD=null
 REDIS_PORT=6379
+
+
+URI_BASE_PAGARME="https://api.pagar.me/1/"
+API_KEY_PAGARME=COLOCAR A API KEY
 ```
 
 ### Crie uma seed para criar usuario administrador
