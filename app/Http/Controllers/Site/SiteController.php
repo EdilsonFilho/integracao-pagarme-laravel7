@@ -91,6 +91,7 @@ class SiteController extends Controller
 
     public function login(Request $request)
     {
+    
         if (in_array('', $request->only('email', 'password'))) {
             return redirect()->back()->withInput()->withErrors([
                 'message' => 'Oooops, informe todos os dados para efetuar o login!'
@@ -107,12 +108,14 @@ class SiteController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ];
+        
 
         if (!Auth::attempt($credentials)) {
             return redirect()->back()->withInput()->withErrors([
                 'message' => 'Oooops, dados não conferem ou você não tem acesso a essa área!'
             ]);
         }
+        //dd($credentials);
 
         return redirect()->route('site.account.home');
     }

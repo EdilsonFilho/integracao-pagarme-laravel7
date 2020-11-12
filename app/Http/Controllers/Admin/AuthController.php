@@ -12,11 +12,12 @@ class AuthController extends Controller
 {
     public function home()
     {
-        if (!Auth::user()->is_admin) {
+        //dd('aqui');
+        if (Auth::user()->is_admin != 1) {
             Auth::logout();
             return redirect()->route('admin.formlogin');
         }
-
+        
         $pagarme = new PagarmeRequestService();
         $balance = $pagarme->getBalance();
 
@@ -30,9 +31,10 @@ class AuthController extends Controller
 
     public function formLogin()
     {
-        if (Auth::check() === true && Auth::user()->is_admin) {
+       // dd('aqui2');
+        if ( Auth::user()) {
             return redirect()->route('admin.home');
-        }
+       }
 
         Auth::logout();
         return view('admin.login');
@@ -40,6 +42,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        
+        
         if (in_array('', $request->only('email', 'password'))) {
             return redirect()->back()->withInput()->withErrors([
                 'message' => 'Oooops, informe todos os dados para efetuar o login!'
@@ -57,6 +61,7 @@ class AuthController extends Controller
             'password' => $request->password,
             'is_admin' => 1
         ];
+        
 
         if (!Auth::attempt($credentials)) {
             return redirect()->back()->withInput()->withErrors([
